@@ -1,0 +1,1 @@
+web: gunicorn candlestick_data:app

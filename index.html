@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Candlestick Chart App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            background: linear-gradient(to right, #f0f2f5, #e6ecf0);
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        select, input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .messages {
+            background-color: #fff8e1;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .messages ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .chart {
+            text-align: center;
+        }
+
+        .chart img {
+            max-width: 100%;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Candlestick Chart Analyzer</h1>
+
+        <form method="POST">
+            <label for="timezone">Select Timezone:</label>
+            <select name="timezone" id="timezone" required>
+                <option value="UTC">UTC</option>
+                <option value="America/New_York">America/New_York</option>
+                <option value="Europe/London">Europe/London</option>
+                <option value="Asia/Tokyo">Asia/Tokyo</option>
+                <option value="Asia/Kolkata">Asia/Kolkata</option>
+                <option value="Australia/Sydney">Australia/Sydney</option>
+            </select>
+
+            <label for="threshold">Consecutive Candle Threshold:</label>
+            <input type="number" id="threshold" name="threshold" value="3" min="1" required>
+
+            <input type="submit" value="Analyze">
+        </form>
+
+        {% if messages %}
+            <div class="messages">
+                <h3>Alerts:</h3>
+                <ul>
+                    {% for msg in messages %}
+                        <li>{{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if image_url %}
+            <div class="chart">
+                <h3>Candlestick Chart</h3>
+                <img src="data:image/png;base64,{{ image_url }}" alt="Candlestick Chart">
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
