@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -5,7 +6,10 @@ from matplotlib.patches import Rectangle
 import io
 import base64
 
+
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'fallback-secret')
 
 def check_consecutive_candles(df, target_color, threshold):
     count = 0
